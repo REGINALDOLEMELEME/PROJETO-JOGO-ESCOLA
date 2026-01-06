@@ -26,6 +26,14 @@ JUMP_FORCE = -11
 ENEMY_SEPARATION_DIST = 80
 ENEMY_SEPARATION_FORCE = 0.4
 
+MENU_CONTROLS_TEXT = [
+    "CONTROLES",
+    "",
+    "←  →   Mover",
+    "ESPACO   Pular",
+]
+
+
 
 # =========================================================
 # ESTADOS DO JOGO
@@ -286,6 +294,9 @@ def draw():
     if Game.state == STATE_MENU:
         screen.draw.text("Reino dos Dinossauros", center=(WIDTH // 2, 90),
                          fontsize=52, color="white")
+        
+        draw_menu_controls()
+
         for b in buttons:
             b.draw()
 
@@ -314,3 +325,15 @@ def on_mouse_down(pos):
             b.click(pos)
     elif Game.state == STATE_WIN:
         win_button.click(pos)
+
+def draw_menu_controls():
+    start_y = 200
+    line_height = 28
+
+    for i, line in enumerate(MENU_CONTROLS_TEXT):
+        screen.draw.text(
+            line,
+            center=(WIDTH // 2, start_y + i * line_height),
+            fontsize=26 if i == 0 else 22,
+            color="white"
+        )
