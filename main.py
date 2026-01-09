@@ -39,6 +39,7 @@ COLOR_RED = (160, 60, 60)
 STATE_MENU = 0
 STATE_PLAYING = 1
 STATE_WIN = 2
+STATE_GAME_OVER = 3
 
 
 # =========================================================
@@ -231,7 +232,7 @@ class Game:
     def player_died():
         Game.play_sound("hit")
         music.stop()
-        Game.state = STATE_MENU
+        Game.state = STATE_GAME_OVER
 
     @staticmethod
     def win_game():
@@ -323,10 +324,19 @@ def draw():
 
     elif Game.state == STATE_WIN:
         screen.draw.text(
-            "Parabéns! Você venceu!",
+            "Parab\u00e9ns! Voc\u00ea venceu!",
             center=(WIDTH // 2, 160),
             fontsize=56,
             color="yellow"
+        )
+        win_button.draw()
+
+    elif Game.state == STATE_GAME_OVER:
+        screen.draw.text(
+            "Voc\u00ea perdeu!",
+            center=(WIDTH // 2, 160),
+            fontsize=56,
+            color="red"
         )
         win_button.draw()
 
@@ -335,5 +345,5 @@ def on_mouse_down(pos):
     if Game.state == STATE_MENU:
         for button in buttons:
             button.handle_click(pos)
-    elif Game.state == STATE_WIN:
+    elif Game.state == STATE_WIN or Game.state == STATE_GAME_OVER:
         win_button.handle_click(pos)
